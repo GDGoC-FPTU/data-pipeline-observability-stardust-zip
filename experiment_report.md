@@ -1,8 +1,8 @@
 # Experiment Report: Data Quality Impact on AI Agent
 
-**Student ID:** AI20K-XXXX
-**Name:** (Dien ten cua ban)
-**Date:** (Dien ngay thuc hien)
+**Student ID:** 2A202600187
+**Name:** Nguyễn Ngọc Hiếu
+**Date:** 2026-04-15
 
 ---
 
@@ -12,8 +12,8 @@ Chay `agent_simulation.py` voi 2 bo du lieu va ghi lai ket qua:
 
 | Scenario | Agent Response | Accuracy (1-10) | Notes |
 |----------|----------------|-----------------|-------|
-| Clean Data (`processed_data.csv`) | (Ghi cau tra loi cua Agent) | | |
-| Garbage Data (`garbage_data.csv`) | (Ghi cau tra loi cua Agent) | | |
+| Clean Data (`processed_data.csv`) | Agent: Based on my data, the best choice is Laptop at $1200. | 10 | Trả về kết quả đúng (Laptop) thuộc category electronics |
+| Garbage Data (`garbage_data.csv`) | Agent: Based on my data, the best choice is Nuclear Reactor at $999999. | 0 | Trả về outlier (Nuclear Reactor), do Agent chọn price lớn nhất mà dữ liệu không bị chặn bởi validate |
 
 ---
 
@@ -21,15 +21,12 @@ Chay `agent_simulation.py` voi 2 bo du lieu va ghi lai ket qua:
 
 ### Tai sao Agent tra loi sai khi dung Garbage Data?
 
-(Viet nhan xet cua ban o day — it nhat 50 tu)
-
-(Hay phan tich cac van de nhu Duplicate IDs, wrong data types, outliers, null values
-va giai thich tai sao chung anh huong den ket qua cua Agent.)
+Agent đã trả lời sai vì bộ dữ liệu `garbage_data.csv` chứa các record hoàn toàn phi lý (ví dụ: Nuclear Reactor với giá $999999), không hề đi qua bước validation. Cơ chế của Agent phụ thuộc vào việc tìm kiếm giá lớn nhất trong category electronics, do đó nó tin vào outlier này và trả về kết quả sai lệch. Điều này cho thấy hậu quả của mô hình nhiễm độc khi thiếu quy trình kiểm nghiệm chất lượng dữ liệu.
 
 ---
 
 ## 3. Ket luan
 
-**Quality Data > Quality Prompt?** (Dong y hay khong? Giai thich ngan gon.)
+**Quality Data > Quality Prompt?** Đồng ý.
 
-(Viet ket luan cua ban o day)
+Mặc dù Prompt tốt có thể tối ưu Output, nhưng với một tập dữ liệu đầu vào chứa toàn Rác (Garbage Data), AI sẽ bị mất định hướng hoặc đưa ra những câu trả lời vô nghĩa hoặc sai nhưng cực kỳ thuyết phục (Garbage in - Garbage out). Do đó Data Quality mang tính sống còn đối với sự chính xác của một hệ thống AI.
